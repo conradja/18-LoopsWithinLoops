@@ -3,8 +3,8 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Joseph Conrad.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -80,9 +80,28 @@ def draw_L(window, circle, r, c):
     and m and n are small, positive integers.
     """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    o_x = circle.center.x
+    o_y = circle.center.y
+    radius = circle.radius
+
+    x=o_x
+    y=o_y
+    width = 3
+    for i in range(r+3):
+        if i>r-1:
+            width = c + 3
+        for k in range(width):
+            new_circle = rg.Circle(rg.Point(x,y), radius)
+            new_circle.attach_to(window)
+            new_circle.fill_color = circle.fill_color
+            window.render(0.01)
+
+            x = x+ (2*radius)
+        y = y + (2* radius)
+        x = o_x
 
 
 def run_test_draw_wall_on_right():
@@ -121,9 +140,40 @@ def draw_wall_on_right(rectangle, n, window):
     and n is a small, positive integer.
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    rbi_corner = rectangle.get_lower_right_corner() # get the initial rectangle corners
+    rbix = rbi_corner.x
+    rbiy = rbi_corner.y
+
+    lti_corner = rectangle.get_upper_left_corner()
+    ltix = lti_corner.x
+    ltiy = lti_corner.y
+
+    height = rectangle.get_height() #y increment
+    width = rectangle.get_width() #x increment
+
+    lx = ltix #Set these points initially
+    ly = ltiy
+
+    rx = rbix
+    ry = rbiy
+
+    for i in range(n): #loop through the number of columns
+
+        for k in range(i+1):
+            rect = rg.Rectangle(rg.Point(lx,ly), rg.Point(rx,ry))
+            rect.attach_to(window)
+            window.render(0.1)
+
+            rx -= width
+            lx -= width
+
+        rx = rbix
+        lx = ltix
+        ry += height
+        ly += height
 
 
 # ----------------------------------------------------------------------
